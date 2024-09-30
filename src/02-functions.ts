@@ -45,25 +45,38 @@ console.log(colleagues.current.filter((c) => c.name === "Sheild O Connell"));
 function sortColleagues(
     colleagues: Colleague[],
     sorter: (c1: Colleague, c2: Colleague) => number,
-    max? : number
-  ): EmailContact[] {
+    max?: number
+): EmailContact[] {
     let end = colleagues.length;
     if (max !== undefined) {
-       end = max < 2 ? 1 : max
+        end = max < 2 ? 1 : max
     }
     const sorted = colleagues.sort(sorter);
-    const fullResult =  sorted.map((ce) => ({ name: ce.name, email: ce.contact.email }));
-    return fullResult.slice(0,end)
-  }
-    // Test invocations
-  console.log(sortColleagues(colleagues.current, (a, b) => (a.contact.extension - b.contact.extension),3));
-  console.log(sortColleagues(colleagues.current, (a, b) => (a.name.length - b.name.length),1));
-  
-function findFriends(friends : Friend[],crit : (friend : Friend)=>boolean){
+    const fullResult = sorted.map((ce) => ({ name: ce.name, email: ce.contact.email }));
+    return fullResult.slice(0, end)
+}
+// Test invocations
+console.log(sortColleagues(colleagues.current, (a, b) => (a.contact.extension - b.contact.extension), 3));
+console.log(sortColleagues(colleagues.current, (a, b) => (a.name.length - b.name.length), 1));
+
+function findFriends(friends: Friend[], crit: (friend: Friend) => boolean) {
     return friends
-    .filter(crit) // Filter based on the criterion
-    .map(friend => friend.name); // Return only the names
+        .filter(crit) // Filter based on the criterion
+        .map(friend => friend.name); // Return only the names
 
 }
 console.log(findFriends(friends, (friend) => friend.name.startsWith('Pa')));
 console.log(findFriends(friends, (friend) => friend.age < 35));
+
+function addInterest(friend: Friend, interest: string): void {
+    if (friend.interests !== undefined) {
+        friend.interests.push(interest);
+    }
+    else{
+        friend.interests = [];
+        friend.interests.push(interest);
+    }
+}
+addInterest(friends[0], 'Politics')
+console.log(friends[0].interests)
+
